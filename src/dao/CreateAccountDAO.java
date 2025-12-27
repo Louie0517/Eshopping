@@ -4,6 +4,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import db.DatabaseConnection;
 import model.CreateAccount;
@@ -50,6 +53,33 @@ public class CreateAccountDAO {
         }
     }
 
+    public List<CreateAccount> getUserInfoById(Long uid){
+        List<CreateAccount> list =  new ArrayList<>();
+        String sqlQuery = "SELECT * FROM users WHERE id = ?";
+         try (Connection conn = DatabaseConnection.getConnection();
+            PreparedStatement ps = conn.prepareStatement(sqlQuery)) {
+            ps.setLong(1, uid);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                CreateAccount user = new CreateAccount();
+                user.setUserId(rs.getLong("id"));
+                user.setUsername(rs.getString("username"));
+                user.setPasword(rs.getString("password"));
+                user.setEmail(rs.getString("email"));
+                user.setPhone(rs.getString("phone_no"));
+                user.setDateOfBirth(LocalDate.parse(rs.getString("birthday")));
+                user.setAddress(rs.getString("address"));
+                user.setGender(rs.getString("gender"));
+                user.setBio(rs.getString("biography"));
+                user.setProfilePicPath(rs.getString("profile_path"));
+                list.add(user);
+                } 
+            }catch(SQLException e){
+                e.getMessage();
+            }
+        return list;
+    }
+    
 
     public CreateAccount getUserByEmail(String email) throws SQLException {
         String sqlQuery = "SELECT * FROM users WHERE email = ?";
@@ -127,33 +157,7 @@ public class CreateAccountDAO {
 
       }
 
-    public boolean setStatusActive(int id) {
-        String sqlQuerry = "UPDATE users SET status = 'Active' WHERE id = ? ";
-
-        try(Connection conn = DatabaseConnection.getConnection();
-            PreparedStatement ps = conn.prepareStatement(sqlQuerry)){
-                ps.setInt(1, id);
-                return ps.executeUpdate() > 0;
-                
-            } catch(SQLException e){
-                e.printStackTrace();
-                return false;
-            }
-     }
-
-    public boolean setStatusOffline(int id) {
-        String sqlQuerry = "UPDATE users SET status = 'Offline' WHERE id = ? ";
-        try(Connection conn = DatabaseConnection.getConnection();
-            PreparedStatement ps = conn.prepareStatement(sqlQuerry)){
-                ps.setInt(1, id);
-                return ps.executeUpdate() > 0;
-                
-            } catch(SQLException e){
-                e.printStackTrace();
-                return false;
-            }
-     }
-
+    
     public boolean deleteUser(int id) throws SQLException {
         String sqlQuery = "DELETE users WHERE id = ?";
 

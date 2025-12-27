@@ -9,13 +9,14 @@ public class UserFormValidator {
 
 
     public boolean hasMissingField(CreateAccount user) {
-        return user.getUsername() == null && user.getUsername().isEmpty()
-            && user.getEmail() == null && user.getEmail().isEmpty()
-            && user.getPassword() == null && user.getPassword().isEmpty()
-            && user.getPhone() == null && user.getPhone().isEmpty()
-            && user.getDateOfBirth() == null
-            && user.getGender() == null && user.getGender().isEmpty()
-            && user.getProfilePicPath() == null && user.getProfilePicPath().isEmpty();
+    return user == null
+        || user.getUsername() == null || user.getUsername().trim().isEmpty()
+        || user.getEmail() == null || user.getEmail().trim().isEmpty()
+        || user.getPassword() == null || user.getPassword().trim().isEmpty()
+        || user.getPhone() == null || user.getPhone().trim().isEmpty()
+        || user.getDateOfBirth() == null
+        || user.getGender() == null || user.getGender().trim().isEmpty()
+        || user.getProfilePicPath() == null || user.getProfilePicPath().trim().isEmpty();
     }
 
     public boolean isUsernameTooShort(CreateAccount user){

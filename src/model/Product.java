@@ -3,48 +3,40 @@ package model;
 import java.time.LocalDate;
 
 public class Product {
+
     private int id;
-    private String name;
+    private String productName;
     private int categoryId;
     private int brandId;
     private int supplierId;
     private String unit;
     private double price;
-    private int quantity;
-    private LocalDate dateAdded;
-
-    // new added 
     private int stock;
+
+    private LocalDate dateAdded;
+    private LocalDate updatedAt;
+
+    // Display-only fields
+    private String categoryName;
+    private String brandName;
+    private String supplierName;
     private String description;
     private String imagePath;
-    private LocalDate updatedAt;
+    private double markUp;
+    private double sellingPrice;
 
     public Product() {}
 
-    public Product(int id, String name, int categoryId, int brandId, int supplierId,
-                   String unit, double price, int quantity, int stock, String description, String imagePath,LocalDate dateAdded, LocalDate updatedAt) {
-        this.id = id;
-        this.name = name;
-        this.categoryId = categoryId;
-        this.brandId = brandId;
-        this.supplierId = supplierId;
-        this.unit = unit;
-        this.price = price;
-        this.quantity = quantity;
+    // ===== CORE GETTERS / SETTERS =====
 
-        this.stock = stock;
-        this.description = description;
-        this.imagePath = imagePath;
-        this.dateAdded = dateAdded;
-        this.updatedAt = updatedAt;
-    }
-
-    // Getters and setters
     public int getId() { return id; }
-    public void setId(int id) { this.id = id; }
+    public void setId(int id) { this.id = id;}
 
-    public String getName() { return name; }
-    public void setName(String name) { this.name = name; }
+    public int getStock(){ return stock;}
+    public void setStock(int stock){ this.stock = stock;}
+
+    public String getProductName() { return productName; }
+    public void setProductName(String productName) { this.productName = productName; }
 
     public int getCategoryId() { return categoryId; }
     public void setCategoryId(int categoryId) { this.categoryId = categoryId; }
@@ -61,27 +53,37 @@ public class Product {
     public double getPrice() { return price; }
     public void setPrice(double price) { this.price = price; }
 
-    public int getQuantity() { return quantity; }
-    public void setQuantity(int quantity) { this.quantity = quantity; }
-
     public LocalDate getDateAdded() { return dateAdded; }
     public void setDateAdded(LocalDate dateAdded) { this.dateAdded = dateAdded; }
 
-    // new added
-    public int getStock() { return stock; }
-    public void setStock(int stock){ this.stock = stock; }
+    public LocalDate getUpdatedAt() { return updatedAt; }
+    public void setUpdatedAt(LocalDate updatedAt) { this.updatedAt = updatedAt; }
 
-    public String getDescription(){ return description; }
-    public void setDescription(String description){ this.description = description; }
+    // ===== DISPLAY / JOINED FIELDS =====
 
-    public String getImagePath(){ return imagePath; }
-    public void setImagePath(String imagePath){this.imagePath = imagePath; }
+    public String getCategoryName() { return categoryName; }
+    public void setCategoryName(String categoryName) { this.categoryName = categoryName; }
 
-    public LocalDate getUpdatdaDate(){ return updatedAt; }
-    public void setUpdatedDate( LocalDate updatedAt){ this.updatedAt = updatedAt; }
+    public String getBrandName() { return brandName; }
+    public void setBrandName(String brandName) { this.brandName = brandName; }
+
+    public String getSupplierName() { return supplierName; }
+    public void setSupplierName(String supplierName) { this.supplierName = supplierName; }
+
+    public String getDescription() { return description; }
+    public void setDescription(String description) { this.description = description; }
+
+    public double getMarkUp() { return markUp; }
+    public void setMarkUp(double markUp) { this.markUp = markUp; }
+
+    public double getSellingPrice() { return sellingPrice; }
+    public void setSellingPrice(double sellingPrice) { this.sellingPrice = sellingPrice; }
+
+    public String getImagePath() { return imagePath; }
+    public void setImagePath(String imagePath) { this.imagePath = imagePath; }
 
     @Override
     public String toString() {
-        return name;
+        return productName;
     }
 }

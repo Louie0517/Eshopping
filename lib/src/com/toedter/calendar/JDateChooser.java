@@ -29,6 +29,7 @@ import java.awt.event.KeyEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
@@ -51,8 +52,8 @@ import javax.swing.event.ChangeListener;
  * JTextFieldDateEditor is used as default.
  * 
  * @author Kai Toedter
- * @version $LastChangedRevision: 149 $
- * @version $LastChangedDate: 2011-06-07 19:05:02 +0200 (Di, 07 Jun 2011) $
+ * @version : 149 $
+ * @version : 2011-06-07 19:05:02 +0200 (Di, 07 Jun 2011) $
  */
 public class JDateChooser extends JPanel implements ActionListener,
 		PropertyChangeListener {
@@ -380,11 +381,12 @@ public class JDateChooser extends JPanel implements ActionListener,
 	/**
 	 * Sets the date. Fires the property change "date" if date != null.
 	 * 
-	 * @param date
+	 * @param utilDate
 	 *            the new date.
 	 */
-	public void setDate(Date date) {
-		dateEditor.setDate(date);
+	public void setDate(Date utilDate) {
+		Date localDate = utilDate;
+		dateEditor.setDate(localDate);
 		if (getParent() != null) {
 			getParent().invalidate();
 		}

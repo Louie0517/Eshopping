@@ -23,6 +23,8 @@ import java.io.File;
 import java.text.ParseException;
 
 public class CreateAccountFrame extends JFrame {
+
+    private CreateAccountDAO createAccountDAO = new CreateAccountDAO();
   
     private CreateAccount user;
     private ConvertUtil convertUtil;
@@ -494,9 +496,15 @@ public class CreateAccountFrame extends JFrame {
             showError("Username must be at least 10 characters");
             return;
         }
-
+        
+        // modified
         if (!formValidator.isValidEmail(user.getEmail())) {
             showError("Invalid email format");
+            return;
+        }
+
+        if(createAccountDAO.isEmailExists(user.getEmail())){
+            showError("Email Already Exists");
             return;
         }
 

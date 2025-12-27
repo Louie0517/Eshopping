@@ -1,5 +1,7 @@
 package ui;
 
+import util.*;
+
 import db.DatabaseConnection;
 import model.CreateAccount;
 import util.FontUtil;
@@ -52,7 +54,7 @@ public class LoginFrame extends JFrame {
         brandLabel.setForeground(Color.WHITE);
         brandLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
         
-        JLabel taglineLabel = new JLabel("Your trusted Clothing Shop");
+        JLabel taglineLabel = new JLabel("Your trusted Ecommerce Shop");
         taglineLabel.setFont(FontUtil.loadFontUtil().deriveFont(Font.PLAIN, 16f));
         taglineLabel.setForeground(new Color(220, 230, 255));
         taglineLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
@@ -290,9 +292,6 @@ public class LoginFrame extends JFrame {
     }
 
     private void login() {
-        LoginDAO loginDAO = new LoginDAO();
-        CreateAccount createAccount = new CreateAccount();
-
         String username = txtUser.getText().trim();
         String password = new String(txtPass.getPassword()).trim();
 
@@ -311,7 +310,7 @@ public class LoginFrame extends JFrame {
             }
 
             PreparedStatement ps = conn.prepareStatement(
-                "SELECT * FROM users WHERE username=? AND password=?"
+                "SELECT id, username, email, phone_no, role FROM users WHERE username=? AND password=?"
             );
 
             ps.setString(1, username);
@@ -320,14 +319,31 @@ public class LoginFrame extends JFrame {
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
+                CreateAccount user = new CreateAccount();
+                user.setUserId(rs.getLong("id"));
+                user.setUsername(rs.getString("username"));
+                user.setEmail(rs.getString("email"));
+                user.setPhone(rs.getString("phone_no"));
+                user.setRole(rs.getString("role"));
+                
+                UserSession.getInstance().setCurrentUser(user);
+                
+                System.out.println("Login successful for: " + user.getUsername() + 
+                                " (ID: " + user.getUserId() + ", Role: " + user.getRole() + ")");
+                
                 JOptionPane.showMessageDialog(this, 
                     "Login Successful! Welcome back, " + username + "!", 
                     "Success", JOptionPane.INFORMATION_MESSAGE);
+                
                 dispose();
-                // must be update
-                if(!loginDAO.isBuyer(createAccount.getEmail()))
-                    new ProductFrame();
-                else new CreateAccountFrame();
+                
+                String role = user.getRole().toLowerCase();
+                if (role.equals("admin")) {
+                    new ProductFrame(); 
+                } else {
+                    new ShopFrame(user); 
+                }
+                
             } else {
                 JOptionPane.showMessageDialog(this, "Invalid username or password!", 
                     "Error", JOptionPane.ERROR_MESSAGE);
