@@ -5,31 +5,16 @@ A **Java-based E-Shopping System** designed with two main areas: a **User Portal
 ## Screenshots
 
 ### Login
-
-<p align="center">
-  <img src="images/login.png" width="700">
-</p>
+<img src="images/login.png" width="700">
 
 ### Ordering
-
-<p align="center">
-  <img src="images/ordering.png" width="700">
-</p>
+<img src="images/ordering.png" width="700">
 
 ### Pending Orders
-
-<p align="center">
-  <img src="images/pending.png" width="700">
-</p>
+<img src="images/pending.png" width="700">
 
 ### Processing Orders
-
-<p align="center">
-  <img src="images/processing.png" width="700">
-</p>
+<img src="images/processing.png" width="700">
 
 ### Sales / Purchasing
-
-<p align="center">
-  <img src="images/sales.png" width="700">
-</p>
+<img src="images/sales.png" width="700">
